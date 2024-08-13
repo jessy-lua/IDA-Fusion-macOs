@@ -10,7 +10,7 @@ typedef unsigned int       u32;
 typedef unsigned long      ul64;
 typedef unsigned long long u64;
 
-#if __x86_64__
+#if __EA64__
 typedef u64 uptr;
 #else
 typedef u32 uptr;

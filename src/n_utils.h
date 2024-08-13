@@ -22,14 +22,4 @@ namespace n_utils{
     ea_max = inf_get_max_ea();
   }
 
-  inline void copy_to_clipboard(i8* buffer){
-    u32   alloc_len = strlen(buffer) + 1;
-    void* alloc     = GlobalAlloc(GMEM_FIXED, alloc_len);
-    qstrncpy(reinterpret_cast<i8*>(alloc), buffer, alloc_len);
-
-    OpenClipboard(nullptr);
-    EmptyClipboard();
-    SetClipboardData(CF_TEXT, alloc);
-    CloseClipboard();
-  }
 };

@@ -2,6 +2,7 @@
 
 // Include our signature generator
 #include "c_signature_generator.h"
+#include "n_clipboard.h" // Include our clipboard functions
 
 struct s_signature_find_settings{
   bool silent             = true;   // Output information
@@ -41,10 +42,10 @@ namespace n_signature{
     ea_t ea_max = 0;
     n_utils::get_text_min_max(ea_min, ea_max);
 
-    compiled_binpat_vec_t sig_data{};
-    parse_binpat_str(&sig_data, ea_min, signature.c_str(), 16);
-
     ea_t addr = (find_settings.start_at_addr > 0 ? find_settings.start_at_addr : ea_min) - 1;
+
+    compiled_binpat_vec_t sig_data{};
+    parse_binpat_str(&sig_data, addr, signature.c_str(), 16);
     while(true){
       addr = bin_search3(addr + 1, ea_max, sig_data, BIN_SEARCH_NOCASE | BIN_SEARCH_FORWARD);
 
@@ -194,7 +195,7 @@ namespace n_signature{
 
       // Copy to clipboard
       if(n_settings::data & FLAG_COPY_CREATED_SIGNATURES_TO_CB)
-        n_utils::copy_to_clipboard(signature);
+        n_clipboard::copy_to_clipboard(signature);
 
       // Now free the rendered signature
       free(signature);
