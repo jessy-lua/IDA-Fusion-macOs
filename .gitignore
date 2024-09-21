@@ -4,3 +4,4 @@ intermediaries/
 
 *.dll
 *.zip
+.DS_Store
